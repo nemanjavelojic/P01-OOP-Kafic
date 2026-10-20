@@ -1,0 +1,7 @@
+package pica;
+
+public enum VrstaNeAlkohola {
+
+    VODA, GAZIRANI_SOK, NEGAZIRANI_SOK, CEDJENI_SOK, ENERGETSKO_PICE, KAFA, CAJ, TOPLA_COKOLADA;
+
+}
