@@ -19,22 +19,21 @@ public class Konobar {
         return ime;
     }
 
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
+    // Setter za ime konobara je uklonjen
 
     public List<Sto> getStolovi() {
         return stolovi;
     }
 
-    public void setStolovi(List<Sto> stolovi) {
-        this.stolovi = stolovi;
-    }
+    // Setter za stolove je uklonjen
 
     public Kafic getKafic() {
         return kafic;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Ime ovog konobara je: "+getIme()+" a njegovi stolovi su: "+
+                stolovi.toString();
+    }
 }

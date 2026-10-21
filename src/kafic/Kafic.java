@@ -27,13 +27,59 @@ public class Kafic {
     public void dodajStolove(int n){
 
         for(int i = 0; i < n; i++){
-
             Sto sto = new Sto();
             stolovi.add(sto);
-
         }
 
     }
+
+    public void prikaziStolove() {
+
+        for(Sto s : stolovi){
+            System.out.println(s.toString());
+        }
+
+    }
+
+    public void ukloniSto(int n) {
+
+        for(Sto s : stolovi) {
+            if(s.getBrojStola() == n){
+                stolovi.remove(s);
+                break;
+            }
+        }
+
+    }
+
+    public void prikaziKonobare() {
+
+        for(Konobar k : konobari)  {
+            System.out.println(k.toString());
+        }
+
+    }
+
+    // Konobaru prosledjujem kafic(this), da bi kasnije imao pristup meniju pica za goste
+    public void dodajKonobara(String imeKonobara) {
+
+        Konobar konobar = new Konobar(imeKonobara, this);
+        konobari.add(konobar);
+
+    }
+
+    public void ukloniteKonobara(String ime) {
+
+        for(Konobar k : konobari) {
+            if(k.getIme().equalsIgnoreCase(ime)){
+                konobari.remove(k);
+                break;
+            }
+        }
+
+    }
+
+
 
     private List<Pice> svaPicaBezAlkoholna() {
 
@@ -87,28 +133,23 @@ public class Kafic {
 
     }
 
-    public void dodajKonobara(String imeKonobara, Kafic kafic) {
-
-     Konobar konobar = new Konobar(imeKonobara, kafic);
-     konobari.add(konobar);
-
-    }
-
     public String getNaziv() {
         return naziv;
     }
+
+    // Setter za naziv uklonjen
 
     public List<Sto> getStolovi() {
         return stolovi;
     }
 
+    // Setter za stolove uklonjen
+
     public List<Konobar> getKonobari() {
         return konobari;
     }
 
-    public void setKonobari(List<Konobar> konobari) {
-        this.konobari = konobari;
-    }
+    // Setter za konobare uklonjen
 
     public int getKasa() {
         return kasa;

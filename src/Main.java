@@ -41,7 +41,6 @@ public class Main {
     private void programSef() {
 
 
-
         System.out.println("Unesite sifru kako biste pristupili programu Sefa:");
         String sifra = sc.next();
         if(sifraSef.equals(sifra)){
@@ -58,12 +57,28 @@ public class Main {
                 int izbor = sc.nextInt();
                 switch (izbor){
                     case 1:
-                    System.out.println("Koliko zelite stolova da dodate, taj broj unesite");
+                    System.out.println("Koliko zelite stolova da dodate, taj broj unesite:");
                     kafic.dodajStolove(sc.nextInt());
+                    break;
+                    case 2:
+                    System.out.println("Unesite broj stola koji zelite da obrisete:");
+                    kafic.ukloniSto(sc.nextInt());
                     break;
                     case 3:
                     System.out.println("Kreiramo konobara, unesite njegovo ime:");
-                    kafic.dodajKonobara(sc.next(),kafic);
+                    kafic.dodajKonobara(sc.next());
+                    break;
+                    case 4:
+                    System.out.println("Unesite ime konobara kojeg zelite ukloniti:");
+                    kafic.ukloniteKonobara(sc.next());
+                    break;
+                    case 5:
+                    System.out.println("Prikazivanje svih konobara u kaficu");
+                    kafic.prikaziKonobare();
+                    break;
+                    case 6:
+                    System.out.println("Prikazivanje svih stolova u kaficu");
+                    kafic.prikaziStolove();
                     break;
                     case 0:
                     uslov = false;

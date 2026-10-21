@@ -15,14 +15,19 @@ public class Gost {
         this.novac = novac;
     }
 
+    // Setter za ime uklonjen
+
     public String getIme() {
         return ime;
     }
 
+    // Setter za prezime je uklonjen
 
     public String getPrezime() {
         return prezime;
     }
+
+    // Setter za godine uklonjen
 
     public int getGodine() {
         return godine;
@@ -31,6 +36,8 @@ public class Gost {
     public int getNovac() {
         return novac;
     }
+
+    //Setter za novac je uklonjen
 
     public Sto getSto() {
         return sto;

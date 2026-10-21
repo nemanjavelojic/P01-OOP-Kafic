@@ -22,21 +22,25 @@ public class Sto {
         return gosti;
     }
 
-    public void setGosti(List<Gost> gosti) {
-        this.gosti = gosti;
-    }
+    // Setter za listu gostiju je obrisan radi sigurnosti
 
     public int getRacun() {
         return racun;
     }
 
-    public void setRacun(int racun) {
-        this.racun = racun;
-    }
+    // Setter za racun stola je uklonjen
 
-    // samo getter, radi sigurnosti
+    // samo getter, radi sigurnosti, setter uklonjen
     public int getBrojStola() {
         return brojStola;
     }
+
+    //staticki brojac nema ni getter ni setter
+
+    @Override
+    public String toString() {
+        return "Broj stola: " + brojStola + " " + "racun je: "+racun;
+    }
+
 
 }
