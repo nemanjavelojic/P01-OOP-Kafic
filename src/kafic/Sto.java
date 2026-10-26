@@ -9,6 +9,7 @@ public class Sto {
     private int racun;
     private int brojStola;
     private static int brojacStolova;
+    private Konobar konobar;
 
     public Sto() {
         this.gosti = new ArrayList<>();
@@ -35,7 +36,17 @@ public class Sto {
         return brojStola;
     }
 
+    public Konobar getKonobar() {
+        return konobar;
+    }
+
+    public void setKonobar(Konobar konobar) {
+        this.konobar = konobar;
+    }
+
     //staticki brojac nema ni getter ni setter
+
+
 
     @Override
     public String toString() {

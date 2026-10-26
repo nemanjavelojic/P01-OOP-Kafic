@@ -11,6 +11,7 @@ public class Kafic {
     private String naziv;
     private List<Sto> stolovi;
     private List<Konobar> konobari;
+    private List<Gost> gosti;
     private List<Pice> meniPiceBezAlkoholna;
     private List<Pice> meniPiceAlkoholna;
     private int kasa;
@@ -19,10 +20,31 @@ public class Kafic {
         this.naziv = naziv;
         this.stolovi = new ArrayList<>();
         this.konobari = new ArrayList<>();
+        this.gosti = new ArrayList<>();
         this.meniPiceBezAlkoholna = svaPicaBezAlkoholna();
         this.meniPiceAlkoholna = svaPicaAlkoholna();
         this.kasa = 0;
     }
+
+    public List<Sto> kopijaStolova() {
+
+        List<Sto> kopijaSvihStolova = new ArrayList<>();
+
+        kopijaSvihStolova = stolovi;
+
+        return kopijaSvihStolova;
+
+    }
+
+
+    public void resetujKasu() {
+
+        if(this.kasa > 0) {
+            setKasa(0);
+        }
+
+    }
+
 
     public void dodajStolove(int n){
 
@@ -133,6 +155,19 @@ public class Kafic {
 
     }
 
+    public Sto getStoPoBroju(int n) {
+
+        for (Sto s : this.stolovi) {
+
+            if (s.getBrojStola() == n) {
+                return s;
+            }
+
+        }
+            return null;
+    }
+
+
     public String getNaziv() {
         return naziv;
     }
@@ -167,6 +202,37 @@ public class Kafic {
 
     public List<Pice> getMeniPiceAlkoholna() {
         return meniPiceAlkoholna;
+    }
+
+    public List<Gost> getGosti() {
+        return gosti;
+    }
+
+    // setter za goste uklonjen
+
+    public Gost pronadjiGosta(String ime, String prezime) {
+
+        for (Gost g : gosti) {
+            if (g.getIme().equalsIgnoreCase(ime) && g.getPrezime().equalsIgnoreCase(prezime)) {
+                return g;
+            }
+        }
+        return null;
+    }
+
+
+
+    public void prikaziStoloveGostu(){
+
+        System.out.println("Slobodni stolovi su:");
+        for(Sto s : stolovi) {
+
+            if(s.getGosti().isEmpty()){
+                System.out.println("Broj stola je: "+s.getBrojStola());
+            }
+
+        }
+
     }
 
 }
