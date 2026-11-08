@@ -1,4 +1,4 @@
-package pica;
+package narucivanje;
 
 public abstract class Pice {
 
@@ -11,6 +11,8 @@ public abstract class Pice {
         this.kolicina = kolicina;
         this.cena = cena;
     }
+
+    public abstract boolean piceZaOdrasle();
 
     public String getIme() {
         return ime;

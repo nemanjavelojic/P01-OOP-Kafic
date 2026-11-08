@@ -1,4 +1,6 @@
-package pica;
+package narucivanje;
+
+import narucivanje.enumi.VrstaNeAlkohola;
 
 public class BezAlkoholnoPice extends Pice {
 
@@ -7,6 +9,11 @@ public class BezAlkoholnoPice extends Pice {
     public BezAlkoholnoPice(String ime, double kolicina, int cena, VrstaNeAlkohola vrstaNeAlkohola) {
         super(ime, kolicina, cena);
         this.vrstaNeAlkohola = vrstaNeAlkohola;
+    }
+
+    @Override
+    public boolean piceZaOdrasle() {
+        return false;
     }
 
     public VrstaNeAlkohola getVrstaNeAlkohola() {

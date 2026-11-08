@@ -1,4 +1,4 @@
-package pica;
+package narucivanje.enumi;
 
 public enum VrstaAlkohola {
 

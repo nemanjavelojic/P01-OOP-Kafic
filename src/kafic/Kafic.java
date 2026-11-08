@@ -1,10 +1,11 @@
 package kafic;
 
-import pica.*;
+import narucivanje.*;
+import narucivanje.enumi.VrstaAlkohola;
+import narucivanje.enumi.VrstaNeAlkohola;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Kafic {
 
@@ -36,7 +37,6 @@ public class Kafic {
 
     }
 
-
     public void resetujKasu() {
 
         if(this.kasa > 0) {
@@ -45,6 +45,17 @@ public class Kafic {
 
     }
 
+    public void dodajKasi(int vrednost){
+
+        this.kasa += vrednost;
+
+    }
+
+    public void prikaziKasu() {
+
+        System.out.println("U kasi trenutno ima: "+this.kasa);
+
+    }
 
     public void dodajStolove(int n){
 
@@ -172,19 +183,13 @@ public class Kafic {
         return naziv;
     }
 
-    // Setter za naziv uklonjen
-
     public List<Sto> getStolovi() {
         return stolovi;
     }
 
-    // Setter za stolove uklonjen
-
     public List<Konobar> getKonobari() {
         return konobari;
     }
-
-    // Setter za konobare uklonjen
 
     public int getKasa() {
         return kasa;
@@ -207,8 +212,6 @@ public class Kafic {
     public List<Gost> getGosti() {
         return gosti;
     }
-
-    // setter za goste uklonjen
 
     public Gost pronadjiGosta(String ime, String prezime) {
 

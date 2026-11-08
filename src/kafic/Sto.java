@@ -1,37 +1,47 @@
 package kafic;
 
+import narucivanje.Pice;
+import narucivanje.Racun;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sto {
 
     private List<Gost> gosti;
-    private int racun;
+    private Racun racun;
     private int brojStola;
     private static int brojacStolova;
     private Konobar konobar;
+    private LocalDateTime vremePorudzbine;
 
     public Sto() {
         this.gosti = new ArrayList<>();
-        this.racun = 0;
+        this.racun = new Racun();
         Sto.brojacStolova++;
         this.brojStola = brojacStolova;
     }
 
+    public void dodajNaRacun(Pice p) {
+
+        getRacun().getListaPica().add(p);
+        getRacun().dodajNovac(p.getCena());
+
+    }
 
     public List<Gost> getGosti() {
         return gosti;
     }
 
-    // Setter za listu gostiju je obrisan radi sigurnosti
-
-    public int getRacun() {
+    public Racun getRacun() {
         return racun;
     }
 
-    // Setter za racun stola je uklonjen
+    public void setRacun(Racun racun) {
+        this.racun = racun;
+    }
 
-    // samo getter, radi sigurnosti, setter uklonjen
     public int getBrojStola() {
         return brojStola;
     }
@@ -47,10 +57,17 @@ public class Sto {
     //staticki brojac nema ni getter ni setter
 
 
+    public LocalDateTime getVremePorudzbine() {
+        return vremePorudzbine;
+    }
+
+    public void setVremePorudzbine(LocalDateTime vremePorudzbine) {
+        this.vremePorudzbine = vremePorudzbine;
+    }
 
     @Override
     public String toString() {
-        return "Broj stola: " + brojStola + " " + "racun je: "+racun;
+        return "Broj stola: " + brojStola + " " + "racun je: "+getRacun().getNovac();
     }
 
 

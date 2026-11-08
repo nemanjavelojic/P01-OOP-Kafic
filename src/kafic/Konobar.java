@@ -1,7 +1,8 @@
 package kafic;
 
-import pica.Pice;
+import narucivanje.Pice;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Konobar {
     private String ime;
     private List<Sto> stolovi;
     private Kafic kafic;
+    private Gost gost;
 
     public Konobar(String ime, Kafic kafic) {
         this.ime = ime;
@@ -21,10 +23,25 @@ public class Konobar {
         return ime;
     }
 
-    // Setter za ime konobara je uklonjen
-
     public List<Sto> getStolovi() {
         return stolovi;
+    }
+
+
+    public Gost gostZaPlacanje() {
+
+        for(Sto s : getStolovi()){
+
+            for(Gost g : s.getGosti()){
+
+                return g;
+
+            }
+
+        }
+
+        return null;
+
     }
 
     public void prikaziStolove() {
@@ -38,7 +55,8 @@ public class Konobar {
                 System.out.println("Ime gosta: "+g.getIme());
                 System.out.println("Prezime gosta: "+g.getPrezime());
                 System.out.println("Godine gosta: "+g.getGodine());
-                System.out.println("Novac gosta: "+g.getNovac());
+                System.out.println("Novac gosta: "+g.getNovcanik().getKes());
+                System.out.println("Novac gosta na kartici: "+g.getNovcanik().getKartica());
 
             };
             System.out.println("Broj ovog stola je:"+" "+s.getBrojStola());
@@ -53,6 +71,59 @@ public class Konobar {
         for(Sto s : stolovi) {
 
             System.out.println(s.toString());
+
+        }
+
+    }
+
+    public void proveriVreme() {
+
+
+        if(stolovi.isEmpty()){
+            System.out.println("Jos nemate odabrani sto, izaberite neki od slobodnih.");
+        }else{
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+            for(Sto s : stolovi) {
+
+                System.out.println("Broj stola je: "+s.getBrojStola());
+                if(s.getVremePorudzbine() == null){
+                    System.out.println("Za ovim stolom jos nema ni jedne porudzbine.");
+                }else{
+                    System.out.println("Vreme porudzbine je: "+s.getVremePorudzbine().format(formatter));
+                }
+
+            }
+
+        }
+
+    }
+
+    public void castiSto(int brojStola) {
+
+        boolean stoNadjen = false;
+
+        for(Sto s : stolovi) {
+
+            if(brojStola == s.getBrojStola()){
+                stoNadjen = true;
+
+                if(s.getRacun().getNovac()<=0){
+                    System.out.println("Racun za stolom broj: "+s.getBrojStola()+" je 0 rsd, trenutno nije moguce castiti.");
+                }else{
+                    s.getRacun().ocistiRacun();
+                    s.setVremePorudzbine(null);
+                    System.out.println("Uspesno si castio za stolom broj: "+s.getBrojStola());
+                }
+
+            }
+
+        }
+
+        if(!stoNadjen){
+
+            System.out.println("Ovaj sto nije pronadjen kao Vas sto, ne mozete castiti u ime Kafica.");
 
         }
 
@@ -107,7 +178,7 @@ public class Konobar {
 
         Sto sto = kafic.getStoPoBroju(n);
 
-        if(sto.getRacun()<=0){
+        if(sto.getRacun().getNovac()<=0){
             System.out.println("Racun za ovaj sto"+" "+sto.getBrojStola()+" "+"je placen.");
             return true;
         }else{
@@ -118,10 +189,12 @@ public class Konobar {
 
     }
 
-    // Setter za stolove je uklonjen
-
     public Kafic getKafic() {
         return kafic;
+    }
+
+    public Gost getGost() {
+        return gost;
     }
 
     @Override

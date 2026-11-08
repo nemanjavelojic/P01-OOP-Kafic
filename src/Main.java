@@ -2,7 +2,11 @@ import kafic.Gost;
 import kafic.Kafic;
 import kafic.Konobar;
 import kafic.Sto;
+import kafic.placanje.Kartica;
+import kafic.placanje.Kes;
+import kafic.placanje.Novcanik;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -57,7 +61,8 @@ public class Main {
                         + "|1| - Dodaj stolove  |2| - Ukloni stolove\r\n"
                         + "|3| - Dodaj konobara  |4| - Ukloni konobara\r\n"
                         + "|5| - Prikazi konobare  |6| - Prikazi stolove\r\n"
-                        + "|7| - Resetuj kasu  |0| - Izlaz");
+                        + "|7| - Resetuj kasu  |8| - Prikazi kasu\r\n"
+                        + "|0| - Izlaz");
                 System.out.println("===============================================");
 
                 int izbor = sc.nextInt();
@@ -89,6 +94,9 @@ public class Main {
                     case 7:
                     System.out.println("Resetovanje kase..");
                     kafic.resetujKasu();
+                    break;
+                    case 8:
+                    kafic.prikaziKasu();
                     break;
                     case 0:
                     uslov = false;
@@ -144,8 +152,28 @@ public class Main {
                             k.napustiSto(brojStolaZaRacun);
                         }
                         break;
+                    case 5:
+                        k.proveriVreme();
+                    break;
                     case 6:
-                    // naplati racun stola
+                    System.out.println("Kako zelite da naplatite gostu kes(1) ili kartica(2)");
+                    int iznosRacunaStola = k.gostZaPlacanje().getVrednostRacuna();
+                    kafic.dodajKasi(iznosRacunaStola);
+                    int izbor = sc.nextInt();
+                    if(izbor == 1){
+                        k.gostZaPlacanje().getNovcanik().getKes().plati();
+                        System.out.println("Uspesno ste naplatili racun stola.");
+                    }else if(izbor==2){
+                        k.gostZaPlacanje().getNovcanik().getKartica().plati();
+                        System.out.println("Uspesno ste naplatili racun stola.");
+                    }else{
+                        System.out.println("Niste uneli pravu opciju (1) ili (2)");
+                        break;
+                    }
+                    break;
+                    case 7:
+                    System.out.println("Unesite broj stola koji zelite da castite u ime Kafica:");
+                    k.castiSto(sc.nextInt());
                     break;
                     case 0:
                     uslov = false;
@@ -187,11 +215,23 @@ public class Main {
                 System.out.println("Unesite koliko imate godina:");
                 System.out.println("===============================================");
                 int godine = sc.nextInt();
+                System.out.println("|=| Vas novcanik |=|");
                 System.out.println("Unesite koliko novca imate kod sebe:");
                 System.out.println("===============================================");
-                int novac = sc.nextInt();
-                kafic.getGosti().add(new Gost(ime,prezime,godine,novac));
+                int kesIznos = sc.nextInt();
+                Kes kes = new Kes(kesIznos);
+                System.out.println("Unesite koliko novca imate na kartici:");
+                System.out.println("===============================================");
+                int karticaIznos = sc.nextInt();
+                Kartica kartica = new Kartica(karticaIznos);
+                Novcanik novcanik = new Novcanik(kes, kartica);
+                kafic.getGosti().add(new Gost(ime, prezime, godine, novcanik));
+
+
                 gost = kafic.pronadjiGosta(ime,prezime);
+                kes.setGost(gost);
+                kartica.setGost(gost);
+
                 break;
                 case 2:
                 System.out.println("===============================================");
@@ -237,8 +277,44 @@ public class Main {
                 case 3:
                     gost.getSto().getKonobar().pregledMenijaAlkPica();
                     break;
+                case 4:
+                    System.out.println("Narucujem bezalkoholno pice (1), Narucujem alkoholno pice (2)");
+                    int izborOT = sc.nextInt();
+                    System.out.println("Napisi broj po redu koje pice zelis poruciti.");
+                    int n = sc.nextInt();
+                    gost.naruciPice(izborOT,n);
+                    break;
+                case 5:
+                    System.out.println("Vrednost racuna za vasim stolom je: "+gost.getVrednostRacuna());
+                    break;
+                case 6:
+                    System.out.println("Proverava kes(1) ili kartica(2)");
+                    int opcija = sc.nextInt();
+                    if(opcija == 1){
+                        System.out.println("U novcaniku imate: "+gost.getNovcanik().getKes().getNovac()+" rsd.");
+                    }else if(opcija == 2){
+                        System.out.println("Na kartici imate: "+gost.getNovcanik().getKartica().getNovac()+" rsd.");
+                    }else{
+                        System.out.println("Greska! Niste uneli (1) ili (2) opciju.");
+                        break;
+                    }
+                    break;
+                case 7:
+                    System.out.println("Placanje racuna u toku..");
+                    System.out.println("Ukoliko zelite da platite kesom odaberite (1), a ukoliko zelite karticom (2)");
+                    int opcijaPlacanja = sc.nextInt();
+                    if(opcijaPlacanja == 1){
+                        gost.getNovcanik().getKes().plati();
+                        System.out.println("Uspesno ste platili racun.");
+                    }else if(opcijaPlacanja == 2){
+                        gost.getNovcanik().getKartica().plati();
+                        System.out.println("Uspesno ste platili racun.");
+                    }else{
+                        System.out.println("Niste uneli pravi izbor (1) ili (2)");
+                        break;
+                    }
+                    break;
                 case 0:
-
                     uslov = false;
                     break;
 
@@ -248,7 +324,7 @@ public class Main {
     }
 
 
-    public void  sediZaStolom(int brojStola, Gost gost){
+    public void sediZaStolom(int brojStola, Gost gost){
 
         for(Sto s : kafic.getStolovi()){
 
